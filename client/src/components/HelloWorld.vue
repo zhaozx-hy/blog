@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 
 defineProps({
-  msg: String,
+  msg: String
 })
 
 const count = ref(0)
@@ -26,12 +26,9 @@ const count = ref(0)
     >, the official Vue + Vite starter
   </p>
   <p>
-    Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
+    Install
+    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
+    in your IDE for a better DX
   </p>
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>

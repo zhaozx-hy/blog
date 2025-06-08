@@ -36,10 +36,12 @@ app.all("*", async (req, res, next) => {
     if (req.path.indexOf(ADMIN_TOKEN_PATH) > -1) {
 
         let { token } = req.headers;
-
+        
         let admin_token_sql = "SELECT * FROM `admin` WHERE `token` = ?"
+        let user_token_sql = "SELECT * FROM `user` WHERE `token` = ?"
         let adminResult = await db.async.all(admin_token_sql,[token])
-        if(adminResult.err != null || adminResult.rows.length == 0){
+        let userResult = await db.async.all(user_token_sql,[token])
+        if((adminResult.err != null || adminResult.rows.length == 0)){
             res.send({
                 code: 403,
                 msg: "请先登录"
@@ -55,6 +57,7 @@ app.all("*", async (req, res, next) => {
 
 app.use("/test", require("./routers/TestRouter"))
 app.use("/admin", require("./routers/AdminRouter"))
+app.use("/user",require("./routers/UserRouter"))
 app.use("/category", require("./routers/CategoryRouter"))
 app.use("/blog", require("./routers/BlogRouter"))
 app.use("/upload", require("./routers/UploadRouter"))
@@ -66,4 +69,5 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     console.log(`启动成功 : http://localhost:${port}/`)
 })
+
 

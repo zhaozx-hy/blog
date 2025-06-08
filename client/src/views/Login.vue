@@ -17,19 +17,18 @@
     </div>
 </template>
 
-
 <script setup>
 
-import {ref,reactive,inject} from 'vue'
-import { AdminStore} from '../stores/AdminStore';
+import { ref, reactive, inject } from 'vue'
+import { AdminStore } from '../stores/AdminStore'
+
 import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
 
 const message = inject("message")
 const axios = inject("axios")
 const adminStore = AdminStore()
-
-const router = useRouter()
-const route = useRoute()
 
 /**验证表单规则 */
 let rules = {
@@ -43,39 +42,41 @@ let rules = {
     ],
 };
 
+/**管理员登录数据 */
 const admin = reactive({
     account: localStorage.getItem("account") || "",
     password: localStorage.getItem("password") || "",
     rember: localStorage.getItem("rember") == 1 || false
 })
 
-const login = async ()=>{
-    let result = await axios.post("/admin/login",{
-        account:admin.account,
-        password:admin.password
+/**登录 */
+const login = async () => {
+    let result = await axios.post("/admin/login", {
+        account: admin.account,
+        password: admin.password
     });
-    if(result.data.code==200){
+    if (result.data.code == 200) {
         adminStore.token = result.data.data.token
         adminStore.account = result.data.data.account
         adminStore.id = result.data.data.id
 
+        //把数据存储到localStorage
         if (admin.rember) {
             localStorage.setItem("account", admin.account)
             localStorage.setItem("password", admin.password)
             localStorage.setItem("rember", admin.rember ? 1 : 0)
         }
         router.push("/dashboard")
-        message.info("登陆成功")
-
-    }else{
-        message.error("登录失败");
+        message.info("登录成功")
+    } else {
+        message.error("登录失败")
     }
-    console.log(result)
+
 }
 
 </script>
 
-<style lang="scss"scoped>
+<style lang="scss" scoped>
 .login-panel {
     width: 500px;
     margin: 0 auto;
