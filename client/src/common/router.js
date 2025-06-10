@@ -7,6 +7,8 @@ let routes = [
     { path: "/login", component: () => import("../views/Login.vue") },
     { path: "/userlogin", component: () => import("../views/Userlogin.vue") },
     { path: "/register", component: () => import("../views/Register.vue") },
+    { path: "/aichat", component: () => import("../views/aichat/AIChat.vue") },
+    { path: "/aimessages", component: () => import("../views/aichat/AIMessages.vue") },
     {
         path: "/dashboard", component: () => import("../views/dashboard/Dashboard.vue"), children: [
             { path: "/dashboard/category", component: () => import("../views/dashboard/Category.vue") },
